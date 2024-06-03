@@ -36,8 +36,8 @@ namespace Archer
         private void Update()
         { //lerp= movimiento suave de la camara
             Vector3 desiredPosition = target.transform.position + (Quaternion.Euler(0, angle, 0) * offset) - (target.forward * distance); //calcula la posicion en la que queremos poner la camara
-            transform.position = Vector3.Lerp(transform.position, desiredPosition, travelTime / Time.deltaTime);
-            //transform.position = desiredPosition;
+            //transform.position = Vector3.Lerp(transform.position, desiredPosition, travelTime / Time.deltaTime);
+           transform.position = desiredPosition;
             transform.LookAt(target.position + offset);
             //transform.position - target.position - target.forward * distance + offset;
         }

@@ -29,13 +29,15 @@ namespace Archer
       
 
         private Animator animator;
+        private AudioSource myAudioSource;
+
 
         private void Awake()
         {
            
             // Nos subscribimos al evento de input de disparo (el espacio o el botón A).
             fireInputReference.action.performed += Action_performed;
-
+            myAudioSource = GetComponent<AudioSource>();
             animator = GetComponent<Animator>();
         }
 
@@ -43,26 +45,29 @@ namespace Archer
         {
             // Cuando se pulsa espacio, producimos un disparo
             StartCoroutine(Shoot());
+
         }
 
         private IEnumerator Shoot()
         {
-          
+            animator.SetTrigger("Shoot");
 
             yield return new WaitForSeconds(0.3f);
 
 
             // Instanciar una flecha
-           
+            GameObject newArrow = Instantiate(arrowPrefab);
+            //arrowPrefab = Instantiate(this.gameObject, new Vector3(handPosition.position), Quaternion.identity);
 
             // Colocar la flecha en el punto de referencia de la mano de la arquera
-         
+            newArrow.transform.position = handPosition.position;
 
             // Orientar la flecha hacia delante con respecto a la arquera
-           
-
+            newArrow.transform.rotation = transform.rotation;
             // Aplicar una fuerza a la flecha para que salga disparada
-          
+            newArrow.GetComponent<Rigidbody>().AddForce(transform.forward * force);
+            myAudioSource.Play();
+
         }
     }
 

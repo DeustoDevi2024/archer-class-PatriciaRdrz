@@ -19,6 +19,7 @@ namespace Archer
         private ScriptableObjectGameConfigProvider scriptableObjectGameConfigProvider;
 
         private GameState gameState;
+        //public GameObject player;
 
         private IGameStateProvider gameStateProvider;//new PlayerPrefsGameStateProvider();
 
@@ -35,8 +36,18 @@ namespace Archer
 
             gameStateProvider = new JsonGameStateProvider("state.json");
 
-            gameState = gameStateProvider.Load();
+           gameState = gameStateProvider.Load();
+
         }
+        /*
+        private void Update()
+        {
+
+            if(GameObject.FindGameObjectsWithTag("Enemy").Length <= 0 || player.transform.position.y < 0.0f)
+            {
+                LoadGame();
+            }
+        }*/
 
         public GameConfig GetGameConfig()
         {
@@ -46,7 +57,7 @@ namespace Archer
         private void OnApplicationQuit()
         {
             gameState.timePlayed += Time.realtimeSinceStartup;
-            gameStateProvider.Save(gameState);
+           gameStateProvider.Save(gameState);
             Debug.Log("PlayedTime : " + gameState.timePlayed);
         }
 
